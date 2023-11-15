@@ -1,0 +1,93 @@
+# This document is to store useful commands that are reuired for server launch and maintenance. 
+
+# Renaming mod files to all lowercase. You have to do this for the server to load mods. If any file or sub-directroy of the mod is uppercase, it will fail to launch.
+1. cd /your/mod/directory
+2. find . -depth -exec rename 'y/A-Z/a-z/' {} +
+
+# Launching the server 
+1. cd /your/arma3/server/directory
+# Below is the command to launch the arma3 server from the servers root directroy using a few parameters. Please check the wiki for a list of all available parameters. 
+# For the -name parameter, yourProfileName needs to match yourProfileName.a3profile in /home/steam/.local/share/Arma 3 - Other Profiles/yourProfileName/yourProfileName.Arma3Profile
+# If you dont have this name in the above directroy, the command will create a new profile. This profile holds difficulty settings for the mission. 
+
+# Update arma3 server command with creator DLC to be used in steamcmd program 
+app_update 233780 -beta creatordlc " validate +quit
+
+
+
+
+
+# New way as of 31-08-2023
+-> update all mods/arma3 via steamcmd using runscript argument and the "aram3-update.txt" file in the home directory
+
+-> recursive search the entire mods folder and make sure every directory/filename is lowercase by running the following command in the mods directory
+	EX: find . -depth -exec rename 'y/A-Z/a-z/' {} +
+ 
+-> make sure all mods in ~/mods/steamapps/workshop/content/107410 are symm linked to ~/arma3/
+	EX: ln -s /home/steam/mods/steamapps/workshop/content/107410/* /home/steam/arma3/
+
+-> cd into mad-max-operations and run the following to update the repository and pull anything new in
+	git fetch origin main
+	git pull origin main
+
+-> either copy the missino PBO from git repo to the ~/arma3/mpmissions/ or do a symm link
+ 
+-> edit ~/arma3/server.cfg to reflect the new mission name in the mission class section. ommiting the ".pbo"
+
+-> make sure ~/arma3/viking_mods.txt is updated with the current mod list
+
+-> make any nescessary changes to viking_start.sh file if you want to invoke a different profile template or server config file 
+
+-> run the shell script as follows: ./viking_start.sh
+	# Make sure to run this script with a screen session.
+
+
+# list of useful screen commands
+screen -S session_name 
+
+screen -list *lists screen sessions*
+
+screen -r xxxx *reattach to screen session ID #*
+
+Ctrl+a c Create a new window (with shell).
+Ctrl+a " List all windows.
+Ctrl+a 0 Switch to window 0 (by number).
+Ctrl+a A Rename the current window.
+Ctrl+a S Split current region horizontally into two regions.
+Ctrl+a | Split current region vertically into two regions.
+Ctrl+a tab Switch the input focus to the next region.
+Ctrl+a Ctrl+a Toggle between the current and previous windows
+Ctrl+a Q Close all regions but the current one.
+Ctrl+a X Close the current region.
+
+
+
+
+
+
+########## Old Command line arguments ##########
+
+2. rma3server_x64 -name=test -config=server.cfg -mod="1893300731;450814997" -limitFPS=500 -enableHT
+
+
+
+# Command to load in current mod list (ScottsModList For Dummies)
+rma3server_x64 -name=test -config=server.cfg -mod="1893300731;450814997" -limitFPS=500 -enableHT
+
+
+# Make symbolilc links of mod keys into the server root keys directroy 
+find /home/steam/mods/steamapps/workshop/content/107410/ -type f -name "*.bikey" -exec ln -s {} /home/steam/arma3/keys \;
+
+
+# Below is the -serverMod parameter which loads craters as a servermod. 
+-serverMod=2853200431
+
+
+########## Old Command line arguments ##########
+./arma3server_x64 -name=test -config=server.cfg -cfg=performance.cfg -limitFPS=600 -enableHT -loadMissionToMemory -noLogs -autoInit -hugepages -serverMod="2853200431" -mod="450814997;843577117;843425103;583496184;463939057;497660133;843593391;843632231;583544987;1858075458;2262255106;333310405;1990653162;753946944;623475643;713709341;346726922;1858070328;1862208264;1682280809;837729515;2822758266;498101407;730310357;2941986336;1779063631;2840191596;1877858319;1726494027;1120714022;2141020863;1910457930;2857846877;2800081814;2888888564;1926513010;643530417;366425329;1260802825;1849091860;787892271;1351428303;1745501605;2820127143;823636749;773131200;773125288;884966711;1850026051;1893300731;497661914;735566597;632435682;2291129343;894678801;766491311;1298282761"
+
+
+# Current command for server. Includes Tier 1 and creator DLC
+./arma3server_x64 -name=test -config=server.cfg -cfg=performance.cfg -limitFPS=600 -enableHT -loadMissionToMemory -autoInit -hugepages -serverMod="2853200431" -mod="450814997;843577117;843425103;583496184;463939057;497660133;843593391;843632231;583544987;1858075458;2262255106;333310405;1990653162;753946944;623475643;713709341;346726922;1858070328;1862208264;1682280809;837729515;2822758266;498101407;730310357;2941986336;1779063631;2840191596;1877858319;1726494027;1120714022;2141020863;1910457930;2857846877;2800081814;2888888564;1926513010;643530417;366425329;1260802825;1849091860;787892271;1351428303;1745501605;2820127143;823636749;773131200;773125288;884966711;1850026051;1893300731;497661914;735566597;632435682;2291129343;894678801;766491311;1298282761;2268351256;gm;vn"
+
+###################
