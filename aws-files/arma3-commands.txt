@@ -20,7 +20,7 @@ app_update 233780 -beta creatordlc " validate +quit
 # New way as of 31-08-2023
 -> update all mods/arma3 via steamcmd using runscript argument and the "aram3-update.txt" file in the home directory
 
--> recursive search the entire mods folder and make sure every directory/filename is lowercase by running the following command in the mods directory
+-> recursive search the entire mods folder and make sure every directory/filename is lowercase by running the following command in the mods directory. **REQUIRES RENAME APPLICATION TO BE INSTALLED (sudo apt install rename)**
 	EX: find . -depth -exec rename 'y/A-Z/a-z/' {} +
  
 -> make sure all mods in ~/mods/steamapps/workshop/content/107410 are symm linked to ~/arma3/
